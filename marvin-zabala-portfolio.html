@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marvin M. Zabala — IT Specialist</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0a0e14;
+    --bg2: #111620;
+    --bg3: #161d2a;
+    --border: rgba(255,255,255,0.07);
+    --border2: rgba(255,255,255,0.12);
+    --accent: #4af0c4;
+    --accent2: #3dd4ac;
+    --accent-dim: rgba(74,240,196,0.12);
+    --accent-glow: rgba(74,240,196,0.06);
+    --text: #e8edf5;
+    --text2: #8a9bb5;
+    --text3: #56677f;
+    --serif: 'DM Serif Display', serif;
+    --sans: 'DM Sans', sans-serif;
+    --mono: 'JetBrains Mono', monospace;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 9999; opacity: 0.4;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.25rem 3rem;
+    background: rgba(10,14,20,0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    z-index: 100;
+    transition: padding 0.3s;
+  }
+  .nav-logo {
+    font-family: var(--mono); font-size: 0.85rem;
+    color: var(--accent); letter-spacing: 0.1em;
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    text-decoration: none; font-size: 0.82rem; font-weight: 500;
+    color: var(--text2); letter-spacing: 0.05em; text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 8rem 3rem 4rem;
+    position: relative; overflow: hidden;
+  }
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(74,240,196,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(74,240,196,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 100%);
+  }
+  .hero-orb {
+    position: absolute; top: 20%; right: -5%;
+    width: 500px; height: 500px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(74,240,196,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-content { position: relative; max-width: 860px; }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--mono); font-size: 0.75rem;
+    color: var(--accent); letter-spacing: 0.12em;
+    border: 1px solid rgba(74,240,196,0.3);
+    padding: 0.4rem 0.9rem; border-radius: 2rem;
+    margin-bottom: 2rem;
+  }
+  .hero-tag::before {
+    content: ''; width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%,100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.7); }
+  }
+  .hero-name {
+    font-family: var(--serif); font-size: clamp(3rem, 7vw, 6rem);
+    line-height: 1.05; letter-spacing: -0.02em;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+  }
+  .hero-name em { color: var(--accent); font-style: italic; }
+  .hero-title {
+    font-size: 1.1rem; font-weight: 300;
+    color: var(--text2); margin-bottom: 1.5rem; letter-spacing: 0.02em;
+  }
+  .hero-summary {
+    font-size: 1rem; color: var(--text2); line-height: 1.8;
+    max-width: 580px; margin-bottom: 2.5rem;
+  }
+  .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 0.85rem 1.8rem; font-size: 0.88rem; font-weight: 500;
+    background: var(--accent); color: #0a0e14;
+    border: none; border-radius: 4px; cursor: pointer;
+    text-decoration: none; letter-spacing: 0.04em;
+    transition: opacity 0.2s, transform 0.15s;
+  }
+  .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+  .btn-outline {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 0.85rem 1.8rem; font-size: 0.88rem; font-weight: 500;
+    background: transparent; color: var(--text);
+    border: 1px solid var(--border2); border-radius: 4px; cursor: pointer;
+    text-decoration: none; letter-spacing: 0.04em;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .btn-outline:hover { border-color: var(--accent); background: var(--accent-glow); }
+  .hero-stats {
+    display: flex; gap: 2.5rem; margin-top: 3rem;
+    padding-top: 2rem; border-top: 1px solid var(--border);
+  }
+  .stat-num {
+    font-family: var(--mono); font-size: 2rem; font-weight: 500;
+    color: var(--accent); line-height: 1;
+  }
+  .stat-label { font-size: 0.78rem; color: var(--text3); letter-spacing: 0.06em; text-transform: uppercase; margin-top: 4px; }
+
+  /* ── SECTION BASE ── */
+  section { padding: 5rem 3rem; max-width: 1100px; margin: 0 auto; }
+  .section-tag {
+    font-family: var(--mono); font-size: 0.72rem; color: var(--accent);
+    letter-spacing: 0.14em; text-transform: uppercase;
+    margin-bottom: 0.75rem; display: flex; align-items: center; gap: 10px;
+  }
+  .section-tag::before {
+    content: ''; display: inline-block; width: 20px; height: 1px; background: var(--accent);
+  }
+  .section-title {
+    font-family: var(--serif); font-size: clamp(1.8rem, 4vw, 2.8rem);
+    line-height: 1.2; margin-bottom: 3rem; color: var(--text);
+  }
+
+  /* ── SKILLS ── */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1px; border: 1px solid var(--border);
+    border-radius: 8px; overflow: hidden;
+    background: var(--border);
+  }
+  .skill-group {
+    background: var(--bg2); padding: 1.75rem 2rem;
+    transition: background 0.2s;
+  }
+  .skill-group:hover { background: var(--bg3); }
+  .skill-group-title {
+    font-family: var(--mono); font-size: 0.72rem; color: var(--accent);
+    letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 1.2rem;
+  }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .skill-tag {
+    font-size: 0.78rem; padding: 4px 10px;
+    background: var(--bg); border: 1px solid var(--border2);
+    border-radius: 3px; color: var(--text2);
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .skill-tag:hover { border-color: var(--accent); color: var(--text); }
+
+  /* ── EXPERIENCE ── */
+  .exp-timeline { position: relative; }
+  .exp-timeline::before {
+    content: ''; position: absolute;
+    left: 0; top: 0; bottom: 0; width: 1px;
+    background: linear-gradient(to bottom, var(--accent), transparent);
+  }
+  .exp-item {
+    position: relative; padding-left: 2.5rem; margin-bottom: 3rem;
+    opacity: 0; transform: translateY(20px);
+    transition: opacity 0.6s, transform 0.6s;
+  }
+  .exp-item.visible { opacity: 1; transform: translateY(0); }
+  .exp-dot {
+    position: absolute; left: -5px; top: 6px;
+    width: 11px; height: 11px; border-radius: 50%;
+    background: var(--bg); border: 2px solid var(--accent);
+  }
+  .exp-current .exp-dot { background: var(--accent); }
+  .exp-header { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.5rem; }
+  .exp-role { font-weight: 600; font-size: 1rem; color: var(--text); }
+  .exp-company { font-size: 0.88rem; color: var(--accent); font-family: var(--mono); }
+  .exp-period {
+    font-family: var(--mono); font-size: 0.72rem; color: var(--text3);
+    letter-spacing: 0.08em;
+  }
+  .exp-current .exp-period { color: var(--accent); }
+  .exp-desc { margin-top: 0.75rem; }
+  .exp-desc li {
+    font-size: 0.88rem; color: var(--text2); padding: 0.3rem 0 0.3rem 1rem;
+    position: relative; list-style: none; line-height: 1.65;
+  }
+  .exp-desc li::before {
+    content: '→'; position: absolute; left: 0; color: var(--text3); font-size: 0.75rem;
+  }
+
+  /* ── PROJECTS ── */
+  .projects-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1rem;
+  }
+  .project-card {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 8px; padding: 1.75rem;
+    transition: border-color 0.2s, background 0.2s, transform 0.2s;
+    cursor: pointer; position: relative; overflow: hidden;
+  }
+  .project-card::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(135deg, var(--accent-glow) 0%, transparent 60%);
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .project-card:hover { border-color: rgba(74,240,196,0.3); background: var(--bg3); transform: translateY(-2px); }
+  .project-card:hover::after { opacity: 1; }
+  .project-icon {
+    width: 40px; height: 40px; border-radius: 8px;
+    background: var(--accent-dim); display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem; margin-bottom: 1rem;
+  }
+  .project-name { font-weight: 600; font-size: 1rem; margin-bottom: 0.4rem; color: var(--text); }
+  .project-type {
+    font-family: var(--mono); font-size: 0.7rem; color: var(--accent);
+    letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.75rem;
+  }
+  .project-desc { font-size: 0.85rem; color: var(--text2); line-height: 1.65; margin-bottom: 1.2rem; }
+  .project-stack { display: flex; flex-wrap: wrap; gap: 5px; }
+  .stack-tag {
+    font-family: var(--mono); font-size: 0.68rem; padding: 3px 8px;
+    background: var(--bg); border: 1px solid var(--border2);
+    border-radius: 3px; color: var(--text3);
+  }
+
+  /* ── EDUCATION & TRAINING ── */
+  .edu-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+  }
+  .edu-card {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 8px; padding: 1.5rem 1.75rem;
+  }
+  .edu-degree { font-weight: 600; font-size: 0.95rem; color: var(--text); margin-bottom: 0.3rem; }
+  .edu-school { font-size: 0.85rem; color: var(--accent); font-family: var(--mono); margin-bottom: 0.3rem; }
+  .edu-detail { font-size: 0.8rem; color: var(--text3); }
+  .training-list { margin-top: 2rem; }
+  .training-item {
+    display: flex; gap: 1rem; align-items: baseline;
+    padding: 0.75rem 0; border-bottom: 1px solid var(--border);
+    font-size: 0.85rem; color: var(--text2);
+  }
+  .training-item:last-child { border-bottom: none; }
+  .training-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--accent); flex-shrink: 0; margin-top: 7px; }
+
+  /* ── CONTACT ── */
+  #contact { text-align: center; }
+  .contact-card {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 12px; padding: 3.5rem; max-width: 640px; margin: 0 auto;
+  }
+  .contact-card p { color: var(--text2); margin-bottom: 2rem; line-height: 1.8; }
+  .contact-links { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+  .contact-link {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 0.7rem 1.4rem; font-size: 0.85rem;
+    border: 1px solid var(--border2); border-radius: 4px;
+    color: var(--text2); text-decoration: none;
+    font-family: var(--mono);
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .contact-link:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border); text-align: center;
+    padding: 2rem; font-family: var(--mono); font-size: 0.72rem;
+    color: var(--text3); letter-spacing: 0.06em;
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    width: 100%; height: 1px;
+    background: linear-gradient(to right, transparent, var(--border2), transparent);
+    margin: 0 auto;
+  }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
+
+  @media (max-width: 720px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    #hero { padding: 7rem 1.5rem 3rem; }
+    section { padding: 3.5rem 1.5rem; }
+    .hero-stats { gap: 1.5rem; }
+    .contact-card { padding: 2rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-logo">MMZ // PORTFOLIO</span>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="about" style="max-width:100%; padding:0;">
+<div id="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-orb"></div>
+  <div class="hero-content">
+    <div class="hero-tag">Available for opportunities</div>
+    <h1 class="hero-name">Marvin M.<br><em>Zabala</em></h1>
+    <p class="hero-title">IT Support Specialist &amp; Full-Stack Developer</p>
+    <p class="hero-summary">5 years of experience in Application Support, IT Operations, Full-Stack Web Development, and Network Administration — delivering reliable infrastructure and end-user solutions in fast-paced enterprise environments.</p>
+    <div class="hero-cta">
+      <a href="#projects" class="btn-primary">View Projects ↓</a>
+      <a href="#contact" class="btn-outline">Get In Touch</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">5+</div>
+        <div class="stat-label">Years Experience</div>
+      </div>
+      <div>
+        <div class="stat-num">3</div>
+        <div class="stat-label">Companies Served</div>
+      </div>
+      <div>
+        <div class="stat-num">L1/L2</div>
+        <div class="stat-label">Support Level</div>
+      </div>
+      <div>
+        <div class="stat-num">AWS</div>
+        <div class="stat-label">Cloud Platform</div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-tag">Expertise</div>
+  <h2 class="section-title">Technical Skills</h2>
+  <div class="skills-grid">
+    <div class="skill-group">
+      <div class="skill-group-title">// Technical Support</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Hardware Support</span>
+        <span class="skill-tag">Software Support</span>
+        <span class="skill-tag">Systems Admin</span>
+        <span class="skill-tag">Network Admin</span>
+        <span class="skill-tag">Database Management</span>
+        <span class="skill-tag">IAM</span>
+        <span class="skill-tag">IT Asset Mgmt</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">// Programming & Web</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Python</span>
+        <span class="skill-tag">PowerShell</span>
+        <span class="skill-tag">Bash</span>
+        <span class="skill-tag">JavaScript</span>
+        <span class="skill-tag">PHP</span>
+        <span class="skill-tag">HTML</span>
+        <span class="skill-tag">CSS</span>
+        <span class="skill-tag">SQL</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">// Tools & Platforms</div>
+      <div class="skill-tags">
+        <span class="skill-tag">ServiceNow</span>
+        <span class="skill-tag">Microsoft 365</span>
+        <span class="skill-tag">Active Directory</span>
+        <span class="skill-tag">AWS</span>
+        <span class="skill-tag">Windows Server 2019</span>
+        <span class="skill-tag">Fortinet FortiGate</span>
+        <span class="skill-tag">Sophos</span>
+        <span class="skill-tag">Zscaler</span>
+        <span class="skill-tag">MySQL</span>
+        <span class="skill-tag">PostgreSQL</span>
+        <span class="skill-tag">Power BI</span>
+        <span class="skill-tag">Firebase</span>
+        <span class="skill-tag">Git</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">// Documentation & QA</div>
+      <div class="skill-tags">
+        <span class="skill-tag">FSD</span>
+        <span class="skill-tag">BRD</span>
+        <span class="skill-tag">FUT</span>
+        <span class="skill-tag">UAT</span>
+        <span class="skill-tag">SDLC</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-tag">Career</div>
+  <h2 class="section-title">Work Experience</h2>
+  <div class="exp-timeline">
+
+    <div class="exp-item exp-current">
+      <div class="exp-dot"></div>
+      <div class="exp-header">
+        <div>
+          <div class="exp-role">IT System Specialist</div>
+          <div class="exp-company">Indorama Ventures</div>
+        </div>
+        <div class="exp-period">JUL 2025 — PRESENT</div>
+      </div>
+      <ul class="exp-desc">
+        <li>Daily technical support including account administration via Active Directory, Windows Server 2019, and Microsoft 365.</li>
+        <li>Hardware, software, network, and printer issue resolution for enterprise users.</li>
+        <li>Security and connectivity troubleshooting using Fortinet FortiGate, Zscaler VPN, and Sophos Central.</li>
+        <li>Maintaining stable and secure IT infrastructure and SaaS platforms.</li>
+      </ul>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-dot"></div>
+      <div class="exp-header">
+        <div>
+          <div class="exp-role">IT Support Executive</div>
+          <div class="exp-company">Techvision ICT Solutions — Lazada Logistics Project</div>
+        </div>
+        <div class="exp-period">JUL 2024 — JUL 2025</div>
+      </div>
+      <ul class="exp-desc">
+        <li>Maintained and enhanced business applications using Yida Innovations low-code platform.</li>
+        <li>Technical support for hardware, software, systems, networks, and printers.</li>
+        <li>Resolved technical issues to ensure business continuity across logistics operations.</li>
+      </ul>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-dot"></div>
+      <div class="exp-header">
+        <div>
+          <div class="exp-role">Solution Analyst / Application Support</div>
+          <div class="exp-company">Action Labs IT Services — Nexperia Account</div>
+        </div>
+        <div class="exp-period">JUL 2022 — JUL 2024</div>
+      </div>
+      <ul class="exp-desc">
+        <li>L1/L2 support for local and global business applications via ServiceNow.</li>
+        <li>Managed incidents, service requests, changes, knowledge articles, and service catalog activities.</li>
+        <li>Collaborated with business users and developers on solution design, testing, deployment, and documentation.</li>
+        <li>Automated operational tasks using Python and SQL, improving process efficiency.</li>
+        <li>Investigated and resolved application and database-related issues.</li>
+      </ul>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-dot"></div>
+      <div class="exp-header">
+        <div>
+          <div class="exp-role">IT Staff</div>
+          <div class="exp-company">Ohtsuka Poly-Tech Philippines Inc.</div>
+        </div>
+        <div class="exp-period">JUL 2019 — OCT 2020</div>
+      </div>
+      <ul class="exp-desc">
+        <li>Developed and launched the company website and internal applications from scratch.</li>
+        <li>Technical support for hardware, software, systems, networks, and printers.</li>
+        <li>Maintained IT infrastructure and improved user productivity.</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-tag">Portfolio</div>
+  <h2 class="section-title">Featured Projects</h2>
+  <div class="projects-grid">
+
+    <div class="project-card">
+      <div class="project-icon">🏭</div>
+      <div class="project-type">Web Development</div>
+      <div class="project-name">Ohtsuka Company Website</div>
+      <p class="project-desc">Designed, developed, and launched the official company website and internal business applications from the ground up for Ohtsuka Poly-Tech Philippines Inc.</p>
+      <div class="project-stack">
+        <span class="stack-tag">HTML</span>
+        <span class="stack-tag">CSS</span>
+        <span class="stack-tag">JavaScript</span>
+        <span class="stack-tag">PHP</span>
+        <span class="stack-tag">MySQL</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-icon">⚙️</div>
+      <div class="project-type">Process Automation</div>
+      <div class="project-name">Ops Automation Scripts</div>
+      <p class="project-desc">Developed Python and SQL automation scripts at Nexperia (via Action Labs) to streamline repetitive operational tasks, reducing manual processing time and improving accuracy.</p>
+      <div class="project-stack">
+        <span class="stack-tag">Python</span>
+        <span class="stack-tag">SQL</span>
+        <span class="stack-tag">PostgreSQL</span>
+        <span class="stack-tag">ServiceNow</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-icon">📦</div>
+      <div class="project-type">Low-Code Platform</div>
+      <div class="project-name">Lazada Logistics Apps</div>
+      <p class="project-desc">Maintained and enhanced logistics business applications using Yida Innovations low-code platform, ensuring continuity for Lazada's logistics operations and internal teams.</p>
+      <div class="project-stack">
+        <span class="stack-tag">Yida Low-Code</span>
+        <span class="stack-tag">JavaScript</span>
+        <span class="stack-tag">API Integration</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-icon">📊</div>
+      <div class="project-type">Data & Analytics</div>
+      <div class="project-name">Power BI Dashboards</div>
+      <p class="project-desc">Built business intelligence dashboards and modern report designs using Microsoft Power BI to support data-driven decision-making and operational visibility.</p>
+      <div class="project-stack">
+        <span class="stack-tag">Power BI</span>
+        <span class="stack-tag">SQL</span>
+        <span class="stack-tag">Excel</span>
+        <span class="stack-tag">DAX</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-icon">🔐</div>
+      <div class="project-type">IT Infrastructure</div>
+      <div class="project-name">Network Security Setup</div>
+      <p class="project-desc">Configured and maintained enterprise security solutions including Fortinet FortiGate firewalls, Zscaler VPN, and Sophos Central endpoint protection across multi-site deployments.</p>
+      <div class="project-stack">
+        <span class="stack-tag">Fortinet</span>
+        <span class="stack-tag">Zscaler</span>
+        <span class="stack-tag">Sophos</span>
+        <span class="stack-tag">Windows Server</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-icon">☁️</div>
+      <div class="project-type">Cloud & Identity</div>
+      <div class="project-name">Microsoft 365 Administration</div>
+      <p class="project-desc">End-to-end Microsoft 365 and Active Directory administration covering IAM, user provisioning, policy management, and enterprise-wide support across multiple organizations.</p>
+      <div class="project-stack">
+        <span class="stack-tag">Microsoft 365</span>
+        <span class="stack-tag">Active Directory</span>
+        <span class="stack-tag">Azure AD</span>
+        <span class="stack-tag">PowerShell</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="section-tag">Background</div>
+  <h2 class="section-title">Education & Training</h2>
+  <div class="edu-grid">
+    <div class="edu-card">
+      <div class="edu-degree">BS Information Technology</div>
+      <div class="edu-school">Philippine Women's University CDCEC</div>
+      <div class="edu-detail">Calamba City, Laguna &nbsp;·&nbsp; 2014 – 2019</div>
+    </div>
+    <div class="edu-card">
+      <div class="edu-degree">Computer Systems Servicing NC II</div>
+      <div class="edu-school">TESDA Training Center</div>
+      <div class="edu-detail">Sta. Ana, Manila &nbsp;·&nbsp; 2017</div>
+    </div>
+    <div class="edu-card">
+      <div class="edu-degree">Data Upskilling Training Program</div>
+      <div class="edu-school">Nanays In IT</div>
+      <div class="edu-detail">September 2024 – March 2025</div>
+    </div>
+  </div>
+  <div class="training-list">
+    <div class="section-tag" style="margin-top: 2rem;">// Udemy Courses</div>
+    <div class="training-item"><div class="training-dot"></div>Complete SDLC (2024)</div>
+    <div class="training-item"><div class="training-dot"></div>Cloud Computing on AWS for Beginners</div>
+    <div class="training-item"><div class="training-dot"></div>Microsoft Office Applications (Teams, Outlook, Word, PowerPoint)</div>
+    <div class="training-item"><div class="training-dot"></div>Data Analysis with Excel Pivot Tables &amp; SQL with MySQL</div>
+    <div class="training-item"><div class="training-dot"></div>Microsoft Power BI Desktop for Business Intelligence</div>
+    <div class="training-item"><div class="training-dot"></div>Complete Python Bootcamp: From Zero to Hero</div>
+    <div class="training-item"><div class="training-dot"></div>Machine Learning &amp; Data Science with Python</div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-tag" style="justify-content: center;">Connect</div>
+  <h2 class="section-title" style="text-align: center;">Get In Touch</h2>
+  <div class="contact-card">
+    <p>Open to full-time roles, contract work, and collaboration in IT Support, Application Support, or Full-Stack Web Development. Based in Calamba City, Laguna — available for remote and on-site roles across the Philippines.</p>
+    <div class="contact-links">
+      <a href="mailto:marvz.lavida@gmail.com" class="contact-link">✉ marvz.lavida@gmail.com</a>
+      <a href="tel:+639852968471" class="contact-link">📱 0985 296 8471</a>
+      <a href="#" class="contact-link">📍 Calamba, Laguna</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  © 2025 Marvin M. Zabala &nbsp;·&nbsp; IT Specialist &amp; Developer &nbsp;·&nbsp; Calamba City, Philippines
+</footer>
+
+<script>
+  // Intersection observer for experience items
+  const items = document.querySelectorAll('.exp-item');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 120);
+      }
+    });
+  }, { threshold: 0.1 });
+  items.forEach(item => observer.observe(item));
+
+  // Nav scroll shrink
+  window.addEventListener('scroll', () => {
+    const nav = document.querySelector('nav');
+    nav.style.padding = window.scrollY > 50 ? '0.8rem 3rem' : '1.25rem 3rem';
+  });
+</script>
+</body>
+</html>
